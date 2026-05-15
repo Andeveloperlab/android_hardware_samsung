@@ -144,9 +144,11 @@ ndk::ScopedAStatus Vibrator::getSupportedEffects(
     return ndk::ScopedAStatus::ok();
 }
 
-ndk::ScopedAStatus Vibrator::setAmplitude(float) {
-    return ndk::ScopedAStatus::fromExceptionCode(
-            EX_UNSUPPORTED_OPERATION);
+ndk::ScopedAStatus Vibrator::setAmplitude(float amplitude) {
+    if (amplitude <= 0.0f || amplitude > 1.0f) {
+        return ndk::ScopedAStatus::fromExceptionCode(EX_ILLEGAL_ARGUMENT);
+    }
+    return ndk::ScopedAStatus::ok();
 }
 
 ndk::ScopedAStatus Vibrator::setExternalControl(bool) {
